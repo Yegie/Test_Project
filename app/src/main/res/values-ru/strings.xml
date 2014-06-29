@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Zdrastvuite Mir</string>
+    <string name="hello_world">Zdrastvuite Mir!</string>
+    <string name="action_settings">Nastroike</string>
+    <string name="tire_size_enter">Vevedite Razmer Kolesa</string>
+    <string name="tire_size_width">Sherina</string>
+    <string name="tire_size_percentage">Otnosheniya</string>
+    <string name="tire_size_wheel">Koleso/Disk</string>
+    <string name="new_prompt">Yerunda</string>
+
+
+</resources>
