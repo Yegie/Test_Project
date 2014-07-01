@@ -8,8 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 public class HelloWorldHome extends ActionBarActivity {
@@ -38,6 +42,8 @@ public class HelloWorldHome extends ActionBarActivity {
             String Sel = tv.getResources().getStringArray(R.array.planets_array)[pos];
             TextView view= (TextView) findViewById(R.id.TextPrompt);
             view.setText(Sel);
+            arr.add(Sel);
+            l.setAdapter(adapter);
         }
 
         @Override
@@ -46,6 +52,10 @@ public class HelloWorldHome extends ActionBarActivity {
         }
 
     }
+
+    ArrayList<String> arr = new ArrayList<String>();
+    ListView l;
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +67,12 @@ public class HelloWorldHome extends ActionBarActivity {
 
         view.setOnClickListener(new PromptClickListener());
         a.setOnItemSelectedListener(new PlanetSelectedListener());
+
+        l = (ListView) findViewById(R.id.listView);
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arr);
+        l.setAdapter(adapter);
+
+
     }
 
 
