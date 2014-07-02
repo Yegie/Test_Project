@@ -33,32 +33,40 @@ public class HelloWorldHome extends ActionBarActivity {
         }
 
     }
-    private class PlanetSelectedListener implements Spinner.OnItemSelectedListener {
 
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View tv,
-                                   int pos, long id) {
+    public void recalculate(){
+        System.out.println("Recalculating wheels");
+    }
+
+
+    private class SelectedListener implements Spinner.OnItemSelectedListener {
+
+
+        public boolean checkNeed( View tv, int pos) {
 
             // This is a mystery wrapped in an enigma -- android calls us
             // twice on rotation, first time with a null view.
             //
             if(tv==null)
-                return;
+                return false;
 
             if(don == 0) {
                 don++;
-                return;
+                return false;
             }
+
+            if(pos == 0)
+                return false;
+
+            return true;
             // Log.d(TAG, Log.getStackTraceString(new Exception()));
 
-            String Sel = getResources().getStringArray(R.array.planets_array)[pos];
 
-//            TextView view= (TextView) findViewById(R.id.TextPrompt);
-//            view.setText(Sel);
+        }
 
-            arr.add(Sel);
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-            adapter.notifyDataSetChanged();
         }
 
         @Override
@@ -66,11 +74,85 @@ public class HelloWorldHome extends ActionBarActivity {
 
         }
 
+        public void check(){
+
+            if(
+                    width != null &&
+                    ratio != null &&
+                    rim != null
+            )
+                recalculate();
+            else
+                return;
+        }
+
     }
+    private class WidthSelectedListener extends SelectedListener{
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View tv, int pos, long id) {
+            if(!super.checkNeed(tv, pos)){
+                return;
+            }
+
+            String Sel = getResources().getStringArray(R.array.width_array)[pos];
+
+            width = Sel;
+
+            System.out.println(width+"-"+ratio+"/"+rim);
+
+            super.check();
+        }
+
+    }
+    private class RatioSelectedListener extends SelectedListener{
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View tv, int pos, long id) {
+            if(!super.checkNeed(tv, pos)){
+                return;
+            }
+
+            String Sel = getResources().getStringArray(R.array.ratio_array)[pos];
+
+            ratio = Sel;
+
+            System.out.println(width+"-"+ratio+"/"+rim);
+
+            super.check();
+        }
+
+    }
+
+    private class RimSelectedListener extends SelectedListener{
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View tv, int pos, long id) {
+            if(!super.checkNeed(tv, pos)){
+                return;
+            }
+
+            String Sel = getResources().getStringArray(R.array.rim_array)[pos];
+
+            rim = Sel;
+
+
+            System.out.println(width+"-"+ratio+"/"+rim);
+
+            super.check();
+
+        }
+
+    }
+
 
     ArrayList<String> arr = new ArrayList<String>();
     ListView l;
     ArrayAdapter<String> adapter;
+
+    String width;
+    String ratio;
+    String rim;
 
     @Override
     protected void onRestoreInstanceState (Bundle savedInstanceState){
@@ -95,7 +177,13 @@ public class HelloWorldHome extends ActionBarActivity {
         view.setOnClickListener(new PromptClickListener());
 
         Spinner a = (Spinner) findViewById(R.id.test_spinner);
-        a.setOnItemSelectedListener(new PlanetSelectedListener());
+        a.setOnItemSelectedListener(new WidthSelectedListener());
+
+        Spinner b = (Spinner) findViewById(R.id.test_spinner2);
+        b.setOnItemSelectedListener(new RatioSelectedListener());
+
+        Spinner c = (Spinner) findViewById(R.id.test_spinner3);
+        c.setOnItemSelectedListener(new RimSelectedListener());
 
         l = (ListView) findViewById(R.id.listView);
 

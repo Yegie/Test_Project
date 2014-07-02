@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/TextPrompt"
             android:textSize= "30sp"
-            android:background="#fa0"
+            android:background="#ccc"
             android:gravity="center"/>
 
         <LinearLayout
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/spinner"
                 android:layout_gravity="center_horizontal"
-                android:background="#fde"
+                android:background="#eee"
                 android:gravity="center" />
 
             <TextView
@@ -45,7 +45,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:id="@+id/spinner2"
-                android:background="#fda"
+                android:background="#ddd"
                 android:gravity="center" />
 
             <TextView
@@ -54,18 +54,46 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:id="@+id/spinner3"
-                android:background="#fd0"
+                android:background="#eee"
                 android:gravity="center" />
+
         </LinearLayout>
 
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/test_spinner"
-            android:gravity="center"
-            android:prompt="@string/spinner_prompt"
-            android:entries="@array/planets_array"
-            android:focusableInTouchMode="false" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/test_spinner"
+                android:gravity="center"
+                android:prompt="@string/spinner_prompt"
+                android:entries="@array/width_array"
+                android:focusableInTouchMode="false" />
+
+            <Spinner
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/test_spinner2"
+                android:gravity="center"
+                android:prompt="@string/spinner_prompt"
+                android:entries="@array/ratio_array"
+                android:focusableInTouchMode="false" />
+
+            <Spinner
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/test_spinner3"
+                android:gravity="center"
+                android:prompt="@string/spinner_prompt"
+                android:entries="@array/rim_array"
+                android:focusableInTouchMode="false" />
+        </LinearLayout>
 
         <ListView
             android:layout_width="match_parent"
@@ -74,5 +102,4 @@
 
 
     </LinearLayout>
-
 </RelativeLayout>
