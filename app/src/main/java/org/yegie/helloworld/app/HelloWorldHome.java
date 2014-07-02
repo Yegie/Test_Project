@@ -1,8 +1,7 @@
 package org.yegie.helloworld.app;
 
-import android.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,12 +37,28 @@ public class HelloWorldHome extends ActionBarActivity {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View tv,
-                                   int pos, long id){
-            String Sel = tv.getResources().getStringArray(R.array.planets_array)[pos];
-            TextView view= (TextView) findViewById(R.id.TextPrompt);
-            view.setText(Sel);
+                                   int pos, long id) {
+
+            // This is a mystery wrapped in an enigma -- android calls us
+            // twice on rotation, first time with a null view.
+            //
+            if(tv==null)
+                return;
+
+            if(don == 0) {
+                don++;
+                return;
+            }
+            // Log.d(TAG, Log.getStackTraceString(new Exception()));
+
+            String Sel = getResources().getStringArray(R.array.planets_array)[pos];
+
+//            TextView view= (TextView) findViewById(R.id.TextPrompt);
+//            view.setText(Sel);
+
             arr.add(Sel);
-            l.setAdapter(adapter);
+
+            adapter.notifyDataSetChanged();
         }
 
         @Override
@@ -58,22 +73,44 @@ public class HelloWorldHome extends ActionBarActivity {
     ArrayAdapter<String> adapter;
 
     @Override
+    protected void onRestoreInstanceState (Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        arr = savedInstanceState.getStringArrayList("aaa");
+        connectArrayAdapter();
+    }
+
+    private void connectArrayAdapter() {
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arr);
+        l.setAdapter(adapter);
+    }
+
+    int don = 0;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hello_world_home);
 
         View view=findViewById(R.id.TextPrompt);
-        Spinner a = (Spinner) findViewById(R.id.test_spinner);
-
         view.setOnClickListener(new PromptClickListener());
+
+        Spinner a = (Spinner) findViewById(R.id.test_spinner);
         a.setOnItemSelectedListener(new PlanetSelectedListener());
 
         l = (ListView) findViewById(R.id.listView);
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arr);
-        l.setAdapter(adapter);
+
+        connectArrayAdapter();
 
 
     }
+    @Override
+    protected void onSaveInstanceState(Bundle out){
+        super.onSaveInstanceState(out);
+        out.putStringArrayList("aaa" ,arr);
+
+    }
+
+
 
 
     @Override
