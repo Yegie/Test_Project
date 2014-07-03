@@ -9,8 +9,8 @@
     <string name="tire_size_percentage">Ratio</string>
     <string name="tire_size_wheel">Wheel/Rim</string>
     <string name="new_prompt">Blah Blah Blah</string>
+    <string name="spinner_prompt">Pick One</string>
 
-    <string name="spinner_prompt">Favorite Planet?</string>
     <string-array name="width_array">
         <item>Pick one</item>
         <item>145</item>

@@ -1,11 +1,14 @@
 package org.yegie.helloworld.app;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -36,6 +39,9 @@ public class HelloWorldHome extends ActionBarActivity {
 
     public void recalculate(){
         System.out.println("Recalculating wheels");
+        objs.add(new NoDetail(Integer.parseInt(width),Integer.parseInt(ratio),Double.parseDouble(rim),60,1000));
+
+        adapter.notifyDataSetChanged();
     }
 
 
@@ -145,10 +151,10 @@ public class HelloWorldHome extends ActionBarActivity {
 
     }
 
-
     ArrayList<String> arr = new ArrayList<String>();
+    ArrayList<NoDetail> objs = new ArrayList<NoDetail>();
     ListView l;
-    ArrayAdapter<String> adapter;
+    MyArrayAdapter adapter;
 
     String width;
     String ratio;
@@ -162,7 +168,7 @@ public class HelloWorldHome extends ActionBarActivity {
     }
 
     private void connectArrayAdapter() {
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arr);
+        adapter = new MyArrayAdapter(this,android.R.layout.simple_list_item_1,objs);
         l.setAdapter(adapter);
     }
 
@@ -172,6 +178,9 @@ public class HelloWorldHome extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hello_world_home);
+
+        objs.add(new NoDetail());
+        objs.add(new NoDetail(155,65,14,59,1007));
 
         View view=findViewById(R.id.TextPrompt);
         view.setOnClickListener(new PromptClickListener());
@@ -188,6 +197,31 @@ public class HelloWorldHome extends ActionBarActivity {
         l = (ListView) findViewById(R.id.listView);
 
         connectArrayAdapter();
+
+
+//        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//
+//        for(int i = 0; i<objs.size(); i++){
+//
+//            int abc = R.layout.no_detail_object;
+//
+//            ViewGroup vg = (ViewGroup) inflater.inflate(abc,null);
+//
+//
+//            TextView a_r_r= (TextView) vg.findViewById(R.id.width_ratio_rim);
+//            a_r_r.setText(objs.get(i).width+"-"+objs.get(i).ratio+"/"+objs.get(i).rim);
+//
+//            TextView mph= (TextView) vg.findViewById(R.id.mph);
+//            mph.setText("60 mph would be "+objs.get(i).mph+" mph");
+//
+//            TextView miles= (TextView) vg.findViewById(R.id.miles);
+//            miles.setText("1000 miles would be "+objs.get(i).miles+" miles");
+//
+//
+//            ((ViewGroup) findViewById(R.id.vertical_layout)).addView(vg);
+//
+//
+//        }
 
 
     }
